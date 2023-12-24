@@ -7,13 +7,13 @@ const salesRoute = require("./router/sales");
 const cors = require("cors");
 const User = require("./models/users");
 const Product = require("./models/product");
-
+const { corsOptions } = require("./configs/allowedOrigins");
 
 const app = express();
 const PORT = 4000;
 main();
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Store API
 app.use("/api/store", storeRoute);
@@ -42,7 +42,7 @@ app.post("/api/login", async (req, res) => {
       res.send(user);
       userAuthCheck = user;
     } else {
-      res.status(401).send("Invalid Credentials");
+      res.status(401).send("Invalid  Credentials");
       userAuthCheck = null;
     }
   } catch (error) {
@@ -78,12 +78,10 @@ app.post("/api/register", (req, res) => {
   console.log("request: ", req.body);
 });
 
-
-app.get("/testget", async (req,res)=>{
-  const result = await Product.findOne({ _id: '6429979b2e5434138eda1564'})
-  res.json(result)
-
-})
+app.get("/testget", async (req, res) => {
+  const result = await Product.findOne({ _id: "6429979b2e5434138eda1564" });
+  res.json(result);
+});
 
 app.get("/", (req, res) =>
   res.json("SERVER Working..p  " + process.env.PRODUCT_COOKIE_TOKEN_SECRET)
