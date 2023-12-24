@@ -85,6 +85,10 @@ app.get("/testget", async (req,res)=>{
 
 })
 
+app.get("/", (req, res) =>
+  res.json("SERVER Working..p  " + process.env.PRODUCT_COOKIE_TOKEN_SECRET)
+);
+
 // Here we are listening to the server
 app.listen(PORT, () => {
   console.log("I am live again");
